@@ -1,0 +1,79 @@
+{
+  "version": "1.0.0",
+  "name": "AI Development Environment",
+  "description": "スマホ完結型AI開発環境",
+  
+  "models": {
+    "default": "gemini",
+    "fallback_chain": ["gemini", "grok", "claude", "openai"],
+    
+    "preferences": {
+      "simple_code": {
+        "primary": "gemini",
+        "fallback": "grok-code-fast-1"
+      },
+      "complex_algorithm": {
+        "primary": "gpt-5",
+        "fallback": "claude-opus"
+      },
+      "code_review": {
+        "primary": "grok-code-fast-1",
+        "fallback": "codex"
+      },
+      "debugging": {
+        "primary": "claude",
+        "fallback": "gemini"
+      },
+      "frontend": {
+        "primary": "claude",
+        "fallback": "gpt-5"
+      },
+      "documentation": {
+        "primary": "gemini",
+        "fallback": "gpt-4o"
+      },
+      "research": {
+        "primary": "grok-web",
+        "fallback": "gemini-search"
+      }
+    }
+  },
+  
+  "skills": {
+    "enabled": [
+      "frontend-design",
+      "react-best-practices",
+      "systematic-debugging",
+      "mcp-integration",
+      "ai-orchestration"
+    ],
+    "path": "~/.claude/skills"
+  },
+  
+  "cli_tools": {
+    "claude": {
+      "path": "~/.local/bin/claude",
+      "version": "2.1.11"
+    },
+    "gemini": {
+      "path": "gemini",
+      "version": "0.24.0"
+    },
+    "codex": {
+      "path": "codex",
+      "version": "0.87.0"
+    }
+  },
+  
+  "cost_optimization": {
+    "use_free_tier_first": true,
+    "daily_budget_usd": null,
+    "track_usage": true
+  },
+  
+  "notifications": {
+    "line_enabled": true,
+    "notify_on_completion": true,
+    "notify_on_error": true
+  }
+}
