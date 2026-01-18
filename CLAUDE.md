@@ -1,16 +1,43 @@
-# AI Development Environment - Claude Code Project Context
+# Claude Code プロジェクト設定
 
-このプロジェクトは、スマホ完結型AI開発環境です。Manusを司令塔として、Claude Code、Gemini CLI、Codex CLIを連携させて効率的な開発を行います。
+このファイルは、Claude Codeがこのリポジトリで作業する際のコンテキストを提供します。
 
-## 重要: Manusとの連携
+## プロジェクト概要
 
-**Manusは「司令塔」として機能し、実際の開発作業はこのClaude Codeに委譲されます。**
+このリポジトリは「スマホ完結型AI開発環境」です。**Manusを司令塔・品質管理役**として、**Claude Code（あなた）が実際の開発を担当**します。
 
-Manusからの指示例：
+## あなたの役割
+
+**あなた（Claude Code）は「実装担当」です。**
+
+Manusから委譲されたタスクを、高品質に実装してください。
+
+## ワークフロー
+
 ```
-「ai-dev-environmentをクローンして、delegate.pyを使ってClaude Codeに
-[タスク内容]を実行させてください」
+┌─────────────────────────────────────┐
+│           Manus（司令塔）            │
+│  ・タスク受付                        │
+│  ・Claude Codeへの委譲指示           │
+│  ・成果物の品質確認（ブラウザ）       │
+│  ・フィードバック・修正指示          │
+│  ・最終報告                          │
+└─────────────────────────────────────┘
+   │                    ▲
+   ▼                    │
+┌─────────────────────────────────────┐
+│       Claude Code（実装担当）        │
+│  ・実際のコーディング                │
+│  ・Manusからの指示に基づく修正       │
+└─────────────────────────────────────┘
 ```
+
+1. **Manusからタスクを受け取る** - `delegate.py` 経由で指示が来ます
+2. **実装する** - スキル（ガイドライン）に従って高品質なコードを書く
+3. **Manusが確認する** - Manusがブラウザで成果物を確認します
+4. **フィードバックを受ける** - 問題があればManusから修正指示が来ます
+5. **修正する** - フィードバックに基づいて改善
+6. **繰り返し** - 品質が満足できるまで
 
 ## プロジェクト構造
 
@@ -33,77 +60,59 @@ ai-dev-environment/
 │   └── mcp-builder/          # MCPサーバー開発
 ├── config/            # 設定ファイル
 ├── docs/              # ドキュメント
+├── examples/          # サンプルプロジェクト
 ├── CLAUDE.md          # このファイル
-└── GEMINI.md          # Gemini CLI用コンテキスト
+├── MANUS_RULES.md     # Manusのワークフロールール
+└── README.md          # プロジェクト概要
 ```
 
-## 開発ガイドライン
-
-### コーディング規約
-- Python 3.11+を使用
-- 型ヒントを必ず使用
-- docstringはGoogle形式
-- 日本語コメントOK
-
-### ファイル操作
-- 新規ファイルは適切なディレクトリに配置
-- スクリプトは`scripts/`に
-- スキルは`skills/`に
-- ドキュメントは`docs/`に
-
-### テスト
-- 変更後は必ず動作確認
-- エラーハンドリングを適切に実装
-
 ## 利用可能なスキル
+
+以下のスキルが `skills/` ディレクトリにあります。タスクに応じて参照してください：
 
 | スキル名 | 説明 | 用途 |
 |---------|------|------|
 | frontend-design | 高品質なフロントエンドUI設計 | UI/コンポーネント作成 |
-| react-best-practices | React/Next.jsパフォーマンス最適化 | React開発全般 |
+| react-best-practices | React/Next.jsパフォーマンス最適化（45+ルール） | React開発全般 |
 | systematic-debugging | 体系的デバッグ手法 | バグ修正 |
 | code-review | コードレビューガイドライン | PR/コードレビュー |
 | git-workflow | Gitワークフローベストプラクティス | バージョン管理 |
 | webapp-testing | Playwrightによるテスト | E2Eテスト |
 | mcp-builder | MCPサーバー開発ガイド | MCP開発 |
 
-## よく使うコマンド
+## コーディング規約
 
-```bash
-# タスク委譲（基本）
-python3 scripts/delegate.py claude "タスク内容"
-python3 scripts/delegate.py gemini "簡単な質問"
-python3 scripts/delegate.py codex --review
+### 一般
 
-# スキル指定
-python3 scripts/delegate.py claude "Reactコンポーネント作成" \
-  --skill frontend-design --skill react-best-practices
+- TypeScript/JavaScript: ESLint + Prettier準拠
+- Python: PEP 8準拠、型ヒント必須
+- コメントは日本語でも英語でも可
 
-# 自動選択（タスクタイプとスキルを自動判定）
-python3 scripts/delegate.py auto "タスク内容"
+### フロントエンド
 
-# 統合ワークフロー（Git連携・通知付き）
-python3 scripts/dev.py "新機能を実装" --notify --commit
+- React: 関数コンポーネント + Hooks
+- スタイリング: Tailwind CSS推奨
+- 状態管理: React Context または Zustand
 
-# 利用可能なスキル一覧
-python3 scripts/delegate.py --list-skills
-```
+### バックエンド
 
-## コスト最適化
+- Python: FastAPI推奨
+- Node.js: Express または Hono
 
-タスクは自動的に最適なAIに振り分けられます：
+## 重要な注意事項
 
-| タスクタイプ | 推奨AI | 理由 |
-|-------------|--------|------|
-| 開発・実装 | Claude Code | 高品質なコード生成 |
-| バグ修正 | Claude Code | 複雑な問題解決 |
-| 簡単な質問 | Gemini | 無料枠あり |
-| ドキュメント | Gemini | コスト効率 |
-| コードレビュー | Codex | 専門機能 |
+1. **Manusからのフィードバックを尊重する** - Manusは品質管理役です
+2. **スキルを活用する** - 高品質な出力のためにスキルを参照
+3. **テスト可能な状態で提出する** - Manusがブラウザで確認できるように
+4. **段階的に実装する** - 大きな変更は分割して
 
-## 注意事項
+## Manusとの連携
 
-- このプロジェクトはManusから委譲されたタスクを実行するために使用されます
-- コスト効率を意識し、簡単なタスクはGeminiに委譲することを推奨
-- 大規模な変更を行う場合は、事前にManusに確認を取ってください
-- スキルを活用することで高品質な出力を実現できます
+このプロジェクトでは、以下の役割分担で開発を進めます：
+
+| 役割 | 担当 | 責任 |
+|------|------|------|
+| 司令塔・品質管理 | Manus | タスク管理、ブラウザで品質確認、フィードバック |
+| 実装担当 | Claude Code | コーディング、修正 |
+
+**Manusが「品質に問題がある」と指摘した場合は、その指示に従って修正してください。**
